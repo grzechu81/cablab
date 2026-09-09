@@ -13,6 +13,7 @@ import type { CabinetInput, Project, ProjectSettings } from '../domain/types'
 export const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
   showDimensions: true,
   defaultBoardThickness: 18,
+  defaultShelfFrontOffset: 20,
   doorEdgeMargin: 2.5,
   doorCenterGap: 3,
   grooveWidth: 3,

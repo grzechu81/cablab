@@ -12,8 +12,10 @@ type PositionMode = 'auto' | 'manual';
 
 interface ShelfInput {
   id: string;
-  frontOffset: number;  // mm from cabinet front
+  frontOffset: number;  // mm from cabinet front — a new shelf is seeded with
+                         // ProjectSettings.defaultShelfFrontOffset, then editable
   heightOffset: number; // mm from cabinet bottom (outer, Y=0) to the shelf underside
+                         // — a new shelf is seeded so the set stays evenly spaced (see 03)
   structural: boolean;  // default: false — pin-mounted (adjustable, the default).
                          // true = screwed to both sides ("structural"); contributes
                          // to the screw count instead of the shelf-pin count.
@@ -62,6 +64,7 @@ interface CabinetInput {
 interface ProjectSettings {
   showDimensions: boolean;
   defaultBoardThickness: number; // default 18mm
+  defaultShelfFrontOffset: number; // default 20mm — frontOffset seeded into a newly added shelf
   doorEdgeMargin: number;  // default ~2.5mm — gap between door and cabinet outer edge (full-overlay)
   doorCenterGap: number;   // default ~3mm — gap between the two leaves of a double door
   grooveWidth: number;     // default 3mm — width of the routed back-panel groove

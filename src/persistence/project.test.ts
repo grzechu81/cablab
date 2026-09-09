@@ -16,6 +16,7 @@ function makeProject(): Project {
     settings: {
       showDimensions: true,
       defaultBoardThickness: 18,
+      defaultShelfFrontOffset: 20,
       doorEdgeMargin: 2.5,
       doorCenterGap: 3,
       grooveWidth: 3,
@@ -69,6 +70,12 @@ describe('serializeProject / parseProject', () => {
     raw.cabinets[0].futureField = 42
     const loaded = parseProject(JSON.stringify(raw))
     expect(loaded.cabinets[0]).not.toHaveProperty('futureField')
+  })
+
+  it('fills a missing defaultShelfFrontOffset with its default (added after v1)', () => {
+    const raw = JSON.parse(serializeProject(makeProject()))
+    delete raw.settings.defaultShelfFrontOffset
+    expect(parseProject(JSON.stringify(raw)).settings.defaultShelfFrontOffset).toBe(20)
   })
 })
 

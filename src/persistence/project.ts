@@ -34,6 +34,9 @@ export const ShelfInputSchema = z.object({
 export const ProjectSettingsSchema = z.object({
   showDimensions: z.boolean(),
   defaultBoardThickness: z.number(),
+  // Added after v1 shipped — `.default` keeps older save files loading without a
+  // schemaVersion bump (see docs/04-persistence-schema.md).
+  defaultShelfFrontOffset: z.number().default(20),
   doorEdgeMargin: z.number(),
   doorCenterGap: z.number(),
   grooveWidth: z.number(),

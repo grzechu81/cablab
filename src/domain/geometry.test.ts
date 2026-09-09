@@ -20,6 +20,7 @@ import type {
 const SETTINGS: ProjectSettings = {
   showDimensions: true,
   defaultBoardThickness: 18,
+  defaultShelfFrontOffset: 20,
   doorEdgeMargin: 2.5,
   doorCenterGap: 3,
   grooveWidth: 3,

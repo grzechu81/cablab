@@ -16,6 +16,7 @@ describe('DEFAULT_PROJECT_SETTINGS', () => {
     expect(DEFAULT_PROJECT_SETTINGS).toEqual({
       showDimensions: true,
       defaultBoardThickness: 18,
+      defaultShelfFrontOffset: 20,
       doorEdgeMargin: 2.5,
       doorCenterGap: 3,
       grooveWidth: 3,

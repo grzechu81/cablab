@@ -62,6 +62,8 @@ export interface CabinetInput {
 export interface ProjectSettings {
   showDimensions: boolean
   defaultBoardThickness: number
+  /** `frontOffset` (mm) seeded into a newly added shelf. */
+  defaultShelfFrontOffset: number
   /** Gap between a full-overlay door and the cabinet outer edge. */
   doorEdgeMargin: number
   /** Gap between the two leaves of a double door. */

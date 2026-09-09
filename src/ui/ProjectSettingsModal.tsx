@@ -28,6 +28,13 @@ export function ProjectSettingsModal() {
           onChange={(defaultBoardThickness) => updateSettings({ defaultBoardThickness })}
         />
         <NumberField
+          label={t('settings.defaultShelfFrontOffset')}
+          value={settings.defaultShelfFrontOffset}
+          min={0}
+          suffix={mm}
+          onChange={(defaultShelfFrontOffset) => updateSettings({ defaultShelfFrontOffset })}
+        />
+        <NumberField
           label={t('settings.doorEdgeMargin')}
           value={settings.doorEdgeMargin}
           min={0}

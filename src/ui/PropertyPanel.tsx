@@ -30,6 +30,9 @@ export function PropertyPanel() {
   const defaultBoardThickness = useProjectStore(
     (s) => s.project.settings.defaultBoardThickness,
   )
+  const defaultShelfFrontOffset = useProjectStore(
+    (s) => s.project.settings.defaultShelfFrontOffset,
+  )
   const updateCabinet = useProjectStore((s) => s.updateCabinet)
   const removeCabinet = useProjectStore((s) => s.removeCabinet)
 
@@ -65,7 +68,7 @@ export function PropertyPanel() {
       ...cabinet.shelves.map((shelf, i) => ({ ...shelf, heightOffset: heights[i] })),
       {
         id: newId(),
-        frontOffset: 0,
+        frontOffset: defaultShelfFrontOffset,
         heightOffset: heights[heights.length - 1],
         structural: false,
       },

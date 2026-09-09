@@ -57,6 +57,14 @@ Start this pattern from `schemaVersion: 1` on day one, even before any real
 migration is needed — retrofitting versioning after the first breaking change
 is much more painful than starting with it.
 
+**Additive fields don't need a version bump.** A new `ProjectSettings` /
+`CabinetInput` field with a safe default is expressed as `z.T().default(…)` in
+the schema: an older save file (missing the field) still parses and gets the
+default, and an older build (which strips unknown keys) still loads a newer
+file. Migrations are for changes a default can't express — renames, splits,
+restructures, semantic shifts. Example: `defaultShelfFrontOffset` was added to
+`ProjectSettings` after v1 shipped with `.default(20)` and no bump (decision #32).
+
 ## Autosave (optional, since PWA/offline was ruled out for v1)
 
 Not required for v1 given the "just a normal web page" decision, but worth

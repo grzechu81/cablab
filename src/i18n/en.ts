@@ -89,6 +89,7 @@ export const en = {
     title: 'Project settings',
     showDimensions: 'Show dimensions in the 3D view',
     defaultBoardThickness: 'Default board thickness',
+    defaultShelfFrontOffset: 'Default shelf front offset',
     doorEdgeMargin: 'Door edge margin',
     doorCenterGap: 'Double-door centre gap',
     grooveWidth: 'Back groove width',

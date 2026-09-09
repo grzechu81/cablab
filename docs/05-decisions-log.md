@@ -38,6 +38,7 @@ future-you (or a second machine) doesn't have to re-derive the reasoning.
 | 29 | New cabinets default to `back.enabled: true` (grooved HDF back, 3 mm) | A back panel is the common real-world case; matches decision #14 |
 | 30 | 3D drag: default slides on the **floor plane (X/Z)**, Ctrl/Cmd lifts (Y) — reverses the earlier "X/Y free, Z with Ctrl" sketch | A vertical X/Y drag plane goes edge-on to the pick ray at top-down camera angles (cabinet flew to infinity), and X/Z is the natural axis set for arranging cabinets and for front-to-back face snapping. Implemented with per-drag-axis collision + snapping in `src/scene/collision.ts` |
 | 31 | Deploy: GitHub Pages via a GitHub Actions workflow on push to `main`; git repo re-rooted at the project folder | Matches decision #2 (static hosting); Actions flow needs no `gh-pages` branch; `vite.config.ts` `base` must equal the repo name (`cablab`). Full runbook in `06-deployment.md` |
+| 32 | `ProjectSettings.defaultShelfFrontOffset` (20 mm) — seeds a new shelf's `frontOffset`; added via zod `.default(20)`, no `schemaVersion` bump | The old default of 0 mm (shelf flush with the front) is rarely what you want; 20 mm matches typical practice. A defaulted additive field is backward/forward compatible without a migration — see `04-persistence-schema.md` |
 
 ## Open / TBD
 
