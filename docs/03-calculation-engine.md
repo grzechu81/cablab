@@ -42,8 +42,9 @@ Top and bottom panels span the full cabinet width; side panels fit between them.
 
 ```
 topPanel.width    = width
-topPanel.depth     = depth
-bottomPanel        = same as topPanel
+topPanel.depth     = topDepth   // see "top panel depth with a grooved back" below
+bottomPanel.depth  = depth      // always full depth — supports the HDF
+bottomPanel.width  = width
 
 sidePanel.height   = height - 2 * boardThickness
 sidePanel.depth    = depth
@@ -57,9 +58,24 @@ sidePanel.height   = height
 sidePanel.depth     = depth
 
 topPanel.width      = width - 2 * boardThickness
-topPanel.depth       = depth
-bottomPanel          = same as topPanel
+topPanel.depth       = topDepth
+bottomPanel.depth    = depth
+bottomPanel.width    = width - 2 * boardThickness
 ```
+
+### top panel depth with a grooved back
+
+```
+topDepth = back.enabled
+  ? depth - grooveOffsetFromBack - grooveWidth   // stop at the front of the groove
+  : depth
+```
+
+The side-panel groove that holds the HDF is a vertical channel. If the top
+panel ran the full depth it would cap that channel and you couldn't drop the
+HDF in after the box is assembled. Ending the top panel at the front of the
+groove leaves the channel open at the top. The bottom panel stays full depth —
+it sits behind/under the HDF and supports it (decision #35).
 
 ## Shelves
 

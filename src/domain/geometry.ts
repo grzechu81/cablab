@@ -140,14 +140,25 @@ function panel(
 
 // -------------------------------------------------------------------------
 
-function carcassPanels(input: CabinetInput, bt: number): Panel[] {
+function carcassPanels(
+  input: CabinetInput,
+  bt: number,
+  settings: ProjectSettings,
+): Panel[] {
   const { id, width: W, height: H, depth: D } = input
+
+  // With a grooved back, the top panel stops at the front of the side-panel
+  // groove — otherwise it caps the groove and the HDF can't be slid in after
+  // the box is assembled. The bottom stays full depth (it supports the HDF).
+  const topDepth = input.back.enabled
+    ? D - settings.grooveOffsetFromBack - settings.grooveWidth
+    : D
 
   if (input.joinType === 'top-first') {
     // Top & bottom span the full width; sides fit between them.
     const sideHeight = H - 2 * bt
     return [
-      panel(id, 'top', 'top', W, D, bt, { x: 0, y: H - bt, z: 0 }),
+      panel(id, 'top', 'top', W, topDepth, bt, { x: 0, y: H - bt, z: 0 }),
       panel(id, 'bottom', 'bottom', W, D, bt, { x: 0, y: 0, z: 0 }),
       panel(id, 'left-side', 'left-side', D, sideHeight, bt, {
         x: 0,
@@ -165,7 +176,7 @@ function carcassPanels(input: CabinetInput, bt: number): Panel[] {
   // side-first: sides span the full height; top & bottom fit between them.
   const horizWidth = W - 2 * bt
   return [
-    panel(id, 'top', 'top', horizWidth, D, bt, { x: bt, y: H - bt, z: 0 }),
+    panel(id, 'top', 'top', horizWidth, topDepth, bt, { x: bt, y: H - bt, z: 0 }),
     panel(id, 'bottom', 'bottom', horizWidth, D, bt, { x: bt, y: 0, z: 0 }),
     panel(id, 'left-side', 'left-side', D, H, bt, { x: 0, y: 0, z: 0 }),
     panel(id, 'right-side', 'right-side', D, H, bt, { x: W - bt, y: 0, z: 0 }),
@@ -299,7 +310,7 @@ export function computeCabinetGeometry(
 ): CabinetGeometry {
   const bt = resolveBoardThickness(input, settings)
 
-  const carcass = carcassPanels(input, bt)
+  const carcass = carcassPanels(input, bt, settings)
   const back = backPanel(input, settings, bt)
   const shelves = shelfPanels(input, settings, bt)
   const doors = doorPanels(input, settings, bt)

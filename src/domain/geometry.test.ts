@@ -202,6 +202,26 @@ describe('computeCabinetGeometry — back panel', () => {
       position: expected.position,
     })
   })
+
+  it('shortens the top panel to the groove front so the HDF can slide in', () => {
+    const withBack = computeCabinetGeometry(
+      makeCabinet({ back: { enabled: true, hdfThickness: 3 } }),
+      SETTINGS,
+    )
+    // depth 400 - grooveOffsetFromBack 10 - grooveWidth 3 = 387
+    expect(panelByRole(withBack, 'top').height).toBe(387)
+    // bottom stays full depth; sides too
+    expect(panelByRole(withBack, 'bottom').height).toBe(400)
+    expect(panelByRole(withBack, 'left-side').width).toBe(400)
+  })
+
+  it('leaves the top panel full depth when there is no back', () => {
+    const noBack = computeCabinetGeometry(
+      makeCabinet({ back: { enabled: false, hdfThickness: 3 } }),
+      SETTINGS,
+    )
+    expect(panelByRole(noBack, 'top').height).toBe(400)
+  })
 })
 
 // --- shelves ----------------------------------------------------------
