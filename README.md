@@ -1,32 +1,34 @@
-# React + TypeScript + Vite
+# CabLab
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A client-side web app for designing simple, self-built cabinets: enter a body
+(width × height × depth), pick how the panels join, add doors / shelves / a back
+panel, and get real panel dimensions, a hardware estimate, a printable cut list,
+and a 3D scene of the whole project. No backend — a project saves and loads as a
+single JSON file.
 
-Currently, two official plugins are available:
+Built with Vite + React + TypeScript, three.js / react-three-fiber for the 3D
+view, Zustand for state, and zod for save-file validation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Develop
 
-## React Compiler
+Requires Node ≥ 20.19 (see `.nvmrc`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev        # dev server at http://localhost:5173
+npm test           # Vitest (calculation engine, persistence, collision, …)
+npm run lint       # oxlint
+npm run build      # type-check + production build to dist/
+npm run preview    # serve the production build locally
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Deploy
+
+Pushing to `main` publishes to **GitHub Pages** at
+`https://<user>.github.io/cablab/` via `.github/workflows/deploy.yml`. The Pages
+base path is set in `vite.config.ts` and must match the repository name.
+
+## More
+
+- `CLAUDE.md` — orientation for working in this repo (layout, conventions).
+- `docs/` — the design source of truth (`00-overview` → `05-decisions-log`).

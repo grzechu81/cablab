@@ -22,11 +22,11 @@ scene of the project. No backend; a project saves/loads as one JSON file.
 Before finishing a change, run `npm test`, `npx tsc -b`, and `npm run lint` — all
 must be clean (zero oxlint warnings too).
 
-## Repo quirk
+## Deploy
 
-The git repository root is `/Users/grzegorz/Git`, one level **above** this
-`CabLab/` folder, so commit paths read `CabLab/src/...`. Work happens on the
-`master` branch (all history is there), not `main`.
+Pushing to `main` publishes to GitHub Pages at `https://<user>.github.io/cablab/`
+via `.github/workflows/deploy.yml`. The Pages base path lives in
+`vite.config.ts` (`base: '/cablab/'` on `build`) and must match the repo name.
 
 ## Architecture — derive, don't store
 
