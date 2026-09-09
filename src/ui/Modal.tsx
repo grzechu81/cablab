@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { t } from '../i18n'
 
 interface ModalProps {
@@ -20,14 +20,30 @@ export function Modal({ title, onClose, children, actions, wide }: ModalProps) {
     return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
+  // Close only when a click both starts and ends on the backdrop itself.
+  // A drag that begins inside the dialog (e.g. selecting text in a field and
+  // overshooting the input) must never dismiss it, even when the mouse-up
+  // lands on the backdrop.
+  const pressOnBackdrop = useRef(false)
+
   return (
-    <div className="modal__backdrop" onClick={onClose}>
+    <div
+      className="modal__backdrop"
+      onMouseDown={(event) => {
+        pressOnBackdrop.current = event.target === event.currentTarget
+      }}
+      onMouseUp={(event) => {
+        if (pressOnBackdrop.current && event.target === event.currentTarget) {
+          onClose()
+        }
+        pressOnBackdrop.current = false
+      }}
+    >
       <div
         className={wide ? 'modal modal--wide' : 'modal'}
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        onClick={(event) => event.stopPropagation()}
       >
         <header className="modal__header">
           <h2>{title}</h2>
