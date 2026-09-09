@@ -2,6 +2,7 @@ import { t } from '../i18n'
 import { useProjectStore } from '../state/store'
 import { useUiStore } from '../state/uiStore'
 import { newId } from '../state/defaults'
+import { evenShelfHeightOffsets } from '../domain/shelves'
 import {
   CheckboxField,
   NumberField,
@@ -50,6 +51,26 @@ export function PropertyPanel() {
         i === index ? { ...shelf, ...changes } : shelf,
       ),
     )
+
+  // Adding a shelf re-spaces the whole set evenly; each heightOffset stays
+  // editable afterwards.
+  const addShelf = () => {
+    const boardThickness = cabinet.boardThickness || defaultBoardThickness
+    const heights = evenShelfHeightOffsets(
+      cabinet.shelves.length + 1,
+      cabinet.height,
+      boardThickness,
+    )
+    setShelves([
+      ...cabinet.shelves.map((shelf, i) => ({ ...shelf, heightOffset: heights[i] })),
+      {
+        id: newId(),
+        frontOffset: 0,
+        heightOffset: heights[heights.length - 1],
+        structural: false,
+      },
+    ])
+  }
 
   return (
     <aside className="property-panel">
@@ -179,16 +200,7 @@ export function PropertyPanel() {
       <section className="property-panel__group">
         <div className="property-panel__group-head">
           <h3>{t('propertyPanel.shelves')}</h3>
-          <button
-            type="button"
-            className="btn btn--small"
-            onClick={() =>
-              setShelves([
-                ...cabinet.shelves,
-                { id: newId(), frontOffset: 0, heightOffset: 300, structural: false },
-              ])
-            }
-          >
+          <button type="button" className="btn btn--small" onClick={addShelf}>
             + {t('propertyPanel.addShelf')}
           </button>
         </div>
