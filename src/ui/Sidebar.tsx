@@ -55,25 +55,33 @@ export function Sidebar() {
       </div>
 
       <div className="sidebar__toolbar">
-        <button type="button" className="btn" onClick={handleNew}>
-          {t('actions.newProject')}
-        </button>
-        <button type="button" className="btn" onClick={handleSave}>
-          {t('actions.save')}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          onClick={() => fileInput.current?.click()}
-        >
-          {t('actions.load')}
-        </button>
-        <button type="button" className="btn" onClick={() => openModal('settings')}>
-          {t('actions.settings')}
-        </button>
-        <button type="button" className="btn" onClick={() => openModal('cutList')}>
-          {t('actions.cutList')}
-        </button>
+        <div className="sidebar__toolbar-row">
+          <button type="button" className="btn" onClick={handleNew}>
+            {t('actions.newProject')}
+          </button>
+        </div>
+        <div className="sidebar__toolbar-row">
+          <button type="button" className="btn" onClick={handleSave}>
+            {t('actions.save')}
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => fileInput.current?.click()}
+          >
+            {t('actions.load')}
+          </button>
+        </div>
+        <div className="sidebar__toolbar-row">
+          <button type="button" className="btn" onClick={() => openModal('settings')}>
+            {t('actions.settings')}
+          </button>
+        </div>
+        <div className="sidebar__toolbar-row">
+          <button type="button" className="btn" onClick={() => openModal('cutList')}>
+            {t('actions.cutList')}
+          </button>
+        </div>
         <input
           ref={fileInput}
           type="file"

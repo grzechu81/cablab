@@ -70,8 +70,17 @@ h3 {
 
 .sidebar__toolbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
+}
+
+.sidebar__toolbar-row {
+  display: flex;
+  gap: 6px;
+}
+
+.sidebar__toolbar-row .btn {
+  flex: 1;
 }
 
 .sidebar__error {
