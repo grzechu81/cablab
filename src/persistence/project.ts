@@ -58,6 +58,8 @@ export const CabinetInputSchema = z.object({
   doors: z.object({
     config: z.enum(['none', 'single', 'double']),
     overlayType: z.enum(['full-overlay', 'half-overlay', 'inset']),
+    // Added after v1 — `.default` keeps older save files loading (see docs/04).
+    seeThrough: z.boolean().default(false),
   }),
   back: z.object({
     enabled: z.boolean(),

@@ -44,6 +44,8 @@ export interface CabinetInput {
   doors: {
     config: DoorConfig
     overlayType: OverlayType
+    /** Render the doors semi-transparent so the interior stays visible (view only). */
+    seeThrough: boolean
   }
 
   back: {

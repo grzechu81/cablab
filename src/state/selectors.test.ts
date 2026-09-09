@@ -21,7 +21,7 @@ function cabinet(overrides: Partial<CabinetInput> = {}): CabinetInput {
     joinType: 'top-first',
     boardThickness: 18,
     shelves: [],
-    doors: { config: 'none', overlayType: 'full-overlay' },
+    doors: { config: 'none', overlayType: 'full-overlay', seeThrough: false },
     back: { enabled: false, hdfThickness: 3 },
     hanger: { enabled: false },
     position: { x: 0, y: 0, z: 0 },
@@ -83,7 +83,7 @@ describe('selectCutoutList', () => {
 describe('selectProjectHardware', () => {
   it('matches computeProjectHardware for the same cabinets', () => {
     const cabinets = [
-      cabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay' } }),
+      cabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } }),
       cabinet({
         id: 'b',
         shelves: [{ id: 's', frontOffset: 0, heightOffset: 300, structural: true }],

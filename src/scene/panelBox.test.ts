@@ -27,7 +27,7 @@ function makeCabinet(overrides: Partial<CabinetInput> = {}): CabinetInput {
     joinType: 'top-first',
     boardThickness: 18,
     shelves: [],
-    doors: { config: 'none', overlayType: 'full-overlay' },
+    doors: { config: 'none', overlayType: 'full-overlay', seeThrough: false },
     back: { enabled: false, hdfThickness: 3 },
     hanger: { enabled: false },
     position: { x: 0, y: 0, z: 0 },
@@ -77,7 +77,7 @@ describe('panelsBounds', () => {
 
   it('includes a door that sits in front of the front face (negative Z)', () => {
     const geo = computeCabinetGeometry(
-      makeCabinet({ doors: { config: 'single', overlayType: 'full-overlay' } }),
+      makeCabinet({ doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } }),
       SETTINGS,
     )
     expect(panelsBounds(geo.panels).min[2]).toBe(-18)

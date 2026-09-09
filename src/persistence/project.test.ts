@@ -38,7 +38,7 @@ function makeProject(): Project {
           { id: 's1', frontOffset: 0, heightOffset: 300, structural: false },
           { id: 's2', frontOffset: 20, heightOffset: 500, structural: true },
         ],
-        doors: { config: 'double', overlayType: 'full-overlay' },
+        doors: { config: 'double', overlayType: 'full-overlay', seeThrough: false },
         back: { enabled: true, hdfThickness: 3 },
         hanger: { enabled: false },
         position: { x: 0, y: 0, z: 0 },
@@ -76,6 +76,12 @@ describe('serializeProject / parseProject', () => {
     const raw = JSON.parse(serializeProject(makeProject()))
     delete raw.settings.defaultShelfFrontOffset
     expect(parseProject(JSON.stringify(raw)).settings.defaultShelfFrontOffset).toBe(20)
+  })
+
+  it('fills a missing doors.seeThrough with false (added after v1)', () => {
+    const raw = JSON.parse(serializeProject(makeProject()))
+    delete raw.cabinets[0].doors.seeThrough
+    expect(parseProject(JSON.stringify(raw)).cabinets[0].doors.seeThrough).toBe(false)
   })
 })
 

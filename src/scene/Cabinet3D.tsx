@@ -123,7 +123,12 @@ export function Cabinet3D({
   return (
     <group position={[worldPos.x, worldPos.y, worldPos.z]} onPointerDown={beginDrag}>
       {geometry.panels.map((panel) => (
-        <Panel3D key={panel.id} panel={panel} highlight={selected} />
+        <Panel3D
+          key={panel.id}
+          panel={panel}
+          highlight={selected}
+          seeThroughDoors={cabinet.doors.seeThrough}
+        />
       ))}
 
       {selected ? (

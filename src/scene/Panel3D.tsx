@@ -15,16 +15,17 @@ const ROLE_COLOR: Record<PanelRole, string> = {
 interface Panel3DProps {
   panel: Panel
   highlight: boolean
+  /** When true, doors render semi-transparent so the interior stays visible. */
+  seeThroughDoors: boolean
 }
 
-export function Panel3D({ panel, highlight }: Panel3DProps) {
+export function Panel3D({ panel, highlight, seeThroughDoors }: Panel3DProps) {
   const { size, center } = useMemo(() => panelBox(panel), [panel])
 
-  // Doors render see-through so the cabinet interior stays visible behind them.
-  const isDoor = panel.role === 'door'
+  const glass = panel.role === 'door' && seeThroughDoors
 
   return (
-    <mesh position={center} renderOrder={isDoor ? 1 : 0}>
+    <mesh position={center} renderOrder={glass ? 1 : 0}>
       <boxGeometry args={size} />
       <meshStandardMaterial
         color={ROLE_COLOR[panel.role]}
@@ -32,9 +33,9 @@ export function Panel3D({ panel, highlight }: Panel3DProps) {
         emissiveIntensity={highlight ? 0.32 : 0}
         roughness={0.75}
         metalness={0}
-        transparent={isDoor}
-        opacity={isDoor ? 0.5 : 1}
-        depthWrite={!isDoor}
+        transparent={glass}
+        opacity={glass ? 0.5 : 1}
+        depthWrite={!glass}
       />
     </mesh>
   )

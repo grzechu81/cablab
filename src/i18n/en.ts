@@ -59,6 +59,7 @@ export const en = {
     doors: 'Doors',
     doorConfig: 'Configuration',
     overlayType: 'Overlay',
+    doorsSeeThrough: 'See-through doors',
     back: 'Back panel',
     backEnabled: 'Has a back panel',
     hdfThickness: 'HDF thickness',

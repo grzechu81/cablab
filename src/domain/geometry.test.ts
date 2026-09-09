@@ -41,7 +41,7 @@ function makeCabinet(overrides: Partial<CabinetInput> = {}): CabinetInput {
     joinType: 'top-first',
     boardThickness: 18,
     shelves: [],
-    doors: { config: 'none', overlayType: 'full-overlay' },
+    doors: { config: 'none', overlayType: 'full-overlay', seeThrough: false },
     back: { enabled: false, hdfThickness: 3 },
     hanger: { enabled: false },
     position: { x: 0, y: 0, z: 0 },
@@ -256,7 +256,7 @@ describe('computeCabinetGeometry — doors (full-overlay)', () => {
 
   it('single door: width/height inset by the edge margin on every side', () => {
     const geo = computeCabinetGeometry(
-      makeCabinet({ doors: { config: 'single', overlayType: 'full-overlay' } }),
+      makeCabinet({ doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } }),
       SETTINGS,
     )
     const door = panelByRole(geo, 'door')
@@ -266,7 +266,7 @@ describe('computeCabinetGeometry — doors (full-overlay)', () => {
 
   it('double door: two equal leaves split by the center gap', () => {
     const geo = computeCabinetGeometry(
-      makeCabinet({ doors: { config: 'double', overlayType: 'full-overlay' } }),
+      makeCabinet({ doors: { config: 'double', overlayType: 'full-overlay', seeThrough: false } }),
       SETTINGS,
     )
     const [left, right] = panelsByRole(geo, 'door')
@@ -282,7 +282,7 @@ describe('computeCabinetGeometry — doors (full-overlay)', () => {
     (overlayType) => {
       expect(() =>
         computeCabinetGeometry(
-          makeCabinet({ doors: { config: 'single', overlayType } }),
+          makeCabinet({ doors: { config: 'single', overlayType, seeThrough: false } }),
           SETTINGS,
         ),
       ).toThrow(/full-overlay only/)
@@ -338,19 +338,19 @@ describe('computeCabinetGeometry — hardware count', () => {
     },
     {
       name: 'single door under the hinge-height threshold — 2 hinges',
-      input: { doors: { config: 'single', overlayType: 'full-overlay' } },
+      input: { doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } },
       expected: { hinges: 2, screws: 8, shelfPins: 0, hangers: 0 },
     },
     {
       name: 'double door under the threshold — 2 hinges per leaf',
-      input: { doors: { config: 'double', overlayType: 'full-overlay' } },
+      input: { doors: { config: 'double', overlayType: 'full-overlay', seeThrough: false } },
       expected: { hinges: 4, screws: 8, shelfPins: 0, hangers: 0 },
     },
     {
       name: 'tall single door at/above the threshold — 3 hinges',
       input: {
         height: HINGE_HEIGHT_THRESHOLD_MM + 2 * SETTINGS.doorEdgeMargin,
-        doors: { config: 'single', overlayType: 'full-overlay' },
+        doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false },
       },
       expected: { hinges: 3, screws: 8, shelfPins: 0, hangers: 0 },
     },
@@ -374,7 +374,7 @@ describe('computeCabinetGeometry — edge banding (provisional rules)', () => {
     const geo = computeCabinetGeometry(
       makeCabinet({
         back: { enabled: true, hdfThickness: 3 },
-        doors: { config: 'single', overlayType: 'full-overlay' },
+        doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false },
         shelves: [makeShelf({ id: 'a' })],
       }),
       SETTINGS,
@@ -418,7 +418,7 @@ describe('computeProjectHardware', () => {
 
   it('sums per-cabinet counts and applies the screw waste margin once, project-wide', () => {
     const project = makeProject([
-      makeCabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay' } }),
+      makeCabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } }),
       makeCabinet({
         id: 'b',
         shelves: [
@@ -465,7 +465,7 @@ describe('computeProjectHardware', () => {
 describe('computeProjectHardwareFromGeometries', () => {
   it('sums supplied geometries and matches computeProjectHardware', () => {
     const cabinets = [
-      makeCabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay' } }),
+      makeCabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false } }),
       makeCabinet({ id: 'b', shelves: [makeShelf({ id: 's', structural: true })] }),
     ]
     const geometries = cabinets.map((c) => computeCabinetGeometry(c, SETTINGS))

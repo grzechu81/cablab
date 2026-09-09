@@ -37,6 +37,9 @@ interface CabinetInput {
   doors: {
     config: DoorConfig;
     overlayType: 'full-overlay' | 'half-overlay' | 'inset'; // default: 'full-overlay'
+    seeThrough: boolean; // default: false — render the doors semi-transparent in the
+                          // 3D view so the interior stays visible. View only; the
+                          // engine ignores it.
     // margins/gaps are NOT per-cabinet — see ProjectSettings.doorEdgeMargin / doorCenterGap
   };
 

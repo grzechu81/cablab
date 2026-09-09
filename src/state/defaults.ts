@@ -45,7 +45,7 @@ export function createDefaultCabinet(
     joinType: 'top-first',
     boardThickness: 0,
     shelves: [],
-    doors: { config: 'none', overlayType: 'full-overlay' },
+    doors: { config: 'none', overlayType: 'full-overlay', seeThrough: false },
     back: { enabled: true, hdfThickness: 3 },
     hanger: { enabled: false },
     position: { x: 0, y: 0, z: 0 },

@@ -26,7 +26,7 @@ function makeCabinet(overrides: Partial<CabinetInput> = {}): CabinetInput {
     joinType: 'top-first',
     boardThickness: 18,
     shelves: [],
-    doors: { config: 'none', overlayType: 'full-overlay' },
+    doors: { config: 'none', overlayType: 'full-overlay', seeThrough: false },
     back: { enabled: false, hdfThickness: 3 },
     hanger: { enabled: false },
     position: { x: 0, y: 0, z: 0 },
@@ -69,7 +69,7 @@ describe('buildCutoutList — grouping', () => {
 
   it('collapses the two leaves of a double door', () => {
     const list = cutList([
-      makeCabinet({ doors: { config: 'double', overlayType: 'full-overlay' } }),
+      makeCabinet({ doors: { config: 'double', overlayType: 'full-overlay', seeThrough: false } }),
     ])
     const doors = list.filter((e) => e.panelRole === 'door')
     expect(doors).toHaveLength(1)
@@ -106,7 +106,7 @@ describe('buildCutoutList — edgeBandedEdges', () => {
     const list = cutList([
       makeCabinet({
         back: { enabled: true, hdfThickness: 3 },
-        doors: { config: 'single', overlayType: 'full-overlay' },
+        doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false },
       }),
     ])
     const by = (role: string) => list.find((e) => e.panelRole === role)!
@@ -132,7 +132,7 @@ describe('buildCutoutList — names & ordering', () => {
         id: 'a',
         name: 'A',
         back: { enabled: true, hdfThickness: 3 },
-        doors: { config: 'single', overlayType: 'full-overlay' },
+        doors: { config: 'single', overlayType: 'full-overlay', seeThrough: false },
         shelves: [shelf('s', 0, 300)],
       }),
       makeCabinet({ id: 'b', name: 'B' }),

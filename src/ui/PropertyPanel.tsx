@@ -149,17 +149,26 @@ export function PropertyPanel() {
           }
         />
         {cabinet.doors.config !== 'none' ? (
-          <SelectField
-            label={t('propertyPanel.overlayType')}
-            value={cabinet.doors.overlayType}
-            options={OVERLAY_TYPES.map((value) => ({
-              value,
-              label: t(`overlayType.${value}`),
-            }))}
-            onChange={(overlayType) =>
-              patch({ doors: { ...cabinet.doors, overlayType } })
-            }
-          />
+          <>
+            <SelectField
+              label={t('propertyPanel.overlayType')}
+              value={cabinet.doors.overlayType}
+              options={OVERLAY_TYPES.map((value) => ({
+                value,
+                label: t(`overlayType.${value}`),
+              }))}
+              onChange={(overlayType) =>
+                patch({ doors: { ...cabinet.doors, overlayType } })
+              }
+            />
+            <CheckboxField
+              label={t('propertyPanel.doorsSeeThrough')}
+              checked={cabinet.doors.seeThrough}
+              onChange={(seeThrough) =>
+                patch({ doors: { ...cabinet.doors, seeThrough } })
+              }
+            />
+          </>
         ) : null}
       </section>
 
