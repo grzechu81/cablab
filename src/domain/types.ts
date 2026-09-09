@@ -141,6 +141,22 @@ export interface CabinetGeometry {
   hardware: HardwareCount
 }
 
+/**
+ * One row of the human-readable cut list. Identical panels (same cabinet, role,
+ * dimensions and edge-banding) are collapsed into a single entry with a
+ * `quantity` — see `buildCutoutList` in `./cutout.ts`.
+ */
+export interface CutoutListEntry {
+  cabinetName: string
+  panelRole: PanelRole
+  width: number
+  height: number
+  thickness: number
+  /** Banded edges, in the fixed order top, left, right, bottom. e.g. `['top', 'left']`. */
+  edgeBandedEdges: string[]
+  quantity: number
+}
+
 export interface ProjectHardware {
   /** Sum of per-cabinet hinge counts. */
   hinges: number

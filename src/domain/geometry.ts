@@ -319,14 +319,19 @@ export function computeCabinetGeometry(
 }
 
 /**
- * Project-level hardware totals. Hinges / shelf pins / hangers are a plain sum
- * of the per-cabinet figures; screws are summed and then a waste margin is
- * applied once, at the project level — `docs/03-calculation-engine.md`.
+ * Project-level hardware totals from already-computed geometry. Hinges / shelf
+ * pins / hangers are a plain sum of the per-cabinet figures; screws are summed
+ * and then a waste margin is applied once — `docs/03-calculation-engine.md`.
+ *
+ * Split out so callers that already hold memoized `CabinetGeometry` objects
+ * (e.g. the state selectors) don't recompute them.
  */
-export function computeProjectHardware(project: Project): ProjectHardware {
-  const totals = project.cabinets.reduce(
-    (acc, cabinet) => {
-      const { hardware } = computeCabinetGeometry(cabinet, project.settings)
+export function computeProjectHardwareFromGeometries(
+  geometries: CabinetGeometry[],
+  screwWasteMarginPercent: number,
+): ProjectHardware {
+  const totals = geometries.reduce(
+    (acc, { hardware }) => {
       acc.hinges += hardware.hinges
       acc.shelfPins += hardware.shelfPins
       acc.hangers += hardware.hangers
@@ -338,8 +343,19 @@ export function computeProjectHardware(project: Project): ProjectHardware {
 
   return {
     ...totals,
-    screwsWithMargin: Math.ceil(
-      totals.screws * (1 + project.settings.screwWasteMarginPercent),
-    ),
+    screwsWithMargin: Math.ceil(totals.screws * (1 + screwWasteMarginPercent)),
   }
+}
+
+/**
+ * Project-level hardware totals for a whole `Project` — computes each cabinet's
+ * geometry, then delegates to `computeProjectHardwareFromGeometries`.
+ */
+export function computeProjectHardware(project: Project): ProjectHardware {
+  return computeProjectHardwareFromGeometries(
+    project.cabinets.map((cabinet) =>
+      computeCabinetGeometry(cabinet, project.settings),
+    ),
+    project.settings.screwWasteMarginPercent,
+  )
 }

@@ -31,6 +31,11 @@ future-you (or a second machine) doesn't have to re-derive the reasoning.
 | 22 | `ShelfInput.heightOffset` — explicit per-shelf vertical position (mm to the underside, from the cabinet's outer bottom) | The engine needs a real vertical position per shelf; measuring to the underside from Y=0 mirrors `frontOffset`'s "from the front face" convention |
 | 23 | `backOffset` (shelf-to-back clearance) = `grooveOffsetFromBack + hdfThickness` when a back is present, else 0 | The shelf-depth formula referenced `backOffset` without defining it; this stops the shelf exactly at the back panel's front face |
 | 24 | `computeCabinetGeometry(input, settings)` takes `ProjectSettings` as a second argument | Door margins, groove dims and screw params live in `ProjectSettings`, not `CabinetInput` — the single-arg signature in the architecture sketch was incomplete |
+| 25 | Cut list grouping is **per-cabinet**: identical panels in different cabinets stay separate rows | Each cabinet's cut list should stand on its own for shop use; merging across cabinets would lose the "which cabinet" column |
+| 26 | Save-file validation **strips** unknown keys rather than rejecting them (zod default, not `.strict()`) | A file written by a slightly newer minor build still loads; missing/mistyped required fields still fail loudly, which is what corrupt-file detection needs |
+| 27 | Persistence split into a pure module (`persistence/project.ts`) + thin DOM glue (`persistence/projectFile.ts`) | Keeps parse/validate/migrate unit-testable in Node; the download/upload plumbing has nothing worth testing |
+| 28 | Store holds raw `Project` only; geometry/cut-list/hardware come from memoized selectors (`state/selectors.ts`) | Direct application of decision #9; per-cabinet geometry cached by `CabinetInput` identity, which works because store actions replace edited cabinets immutably |
+| 29 | New cabinets default to `back.enabled: true` (grooved HDF back, 3 mm) | A back panel is the common real-world case; matches decision #14 |
 
 ## Open / TBD
 

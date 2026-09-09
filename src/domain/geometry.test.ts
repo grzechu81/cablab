@@ -3,6 +3,7 @@ import {
   computeCabinetGeometry,
   computeInnerCavity,
   computeProjectHardware,
+  computeProjectHardwareFromGeometries,
   HINGE_HEIGHT_THRESHOLD_MM,
 } from './geometry'
 import type {
@@ -457,5 +458,31 @@ describe('computeProjectHardware', () => {
     const result = computeProjectHardware(project)
     expect(result.screws).toBe(screws)
     expect(result.screwsWithMargin).toBe(expected)
+  })
+})
+
+describe('computeProjectHardwareFromGeometries', () => {
+  it('sums supplied geometries and matches computeProjectHardware', () => {
+    const cabinets = [
+      makeCabinet({ id: 'a', doors: { config: 'single', overlayType: 'full-overlay' } }),
+      makeCabinet({ id: 'b', shelves: [makeShelf({ id: 's', structural: true })] }),
+    ]
+    const geometries = cabinets.map((c) => computeCabinetGeometry(c, SETTINGS))
+
+    expect(
+      computeProjectHardwareFromGeometries(geometries, SETTINGS.screwWasteMarginPercent),
+    ).toEqual(
+      computeProjectHardware({ schemaVersion: 1, settings: SETTINGS, cabinets }),
+    )
+  })
+
+  it('applies the waste margin once to the summed screw total', () => {
+    const geometries = [
+      computeCabinetGeometry(makeCabinet({ id: 'a' }), SETTINGS), // 8 screws
+      computeCabinetGeometry(makeCabinet({ id: 'b' }), SETTINGS), // 8 screws
+    ]
+    const result = computeProjectHardwareFromGeometries(geometries, 0.15)
+    expect(result.screws).toBe(16)
+    expect(result.screwsWithMargin).toBe(19) // ceil(18.4), not ceil(9.2)*2
   })
 })
