@@ -10,7 +10,7 @@
 export const en = {
   app: {
     title: 'CabLab',
-    tagline: 'Design simple self-built cabinets',
+    tagline: 'Plan cabinets before you cut',
   },
   actions: {
     newProject: 'New',
@@ -26,11 +26,11 @@ export const en = {
   },
   sidebar: {
     cabinets: 'Cabinets',
-    empty: 'No cabinets yet.',
+    empty: 'No cabinets yet — add one above.',
   },
   scene: {
     loading: 'Loading 3D view…',
-    empty: 'Add a cabinet to start building.',
+    empty: 'Add a cabinet to start a project.',
     dragHint: 'Drag a cabinet to slide it on the floor · hold Alt to lift',
   },
   cabinet: {
@@ -49,6 +49,7 @@ export const en = {
   propertyPanel: {
     empty: 'Select a cabinet to edit it.',
     body: 'Body',
+    size: 'Size',
     width: 'Width',
     height: 'Height',
     depth: 'Depth',

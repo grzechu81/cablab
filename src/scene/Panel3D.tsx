@@ -28,8 +28,8 @@ export function Panel3D({ panel, highlight }: Panel3DProps) {
       <boxGeometry args={size} />
       <meshStandardMaterial
         color={ROLE_COLOR[panel.role]}
-        emissive={highlight ? '#2f6bff' : '#000000'}
-        emissiveIntensity={highlight ? 0.22 : 0}
+        emissive={highlight ? '#2f8378' : '#000000'}
+        emissiveIntensity={highlight ? 0.32 : 0}
         roughness={0.75}
         metalness={0}
         transparent={isDoor}

@@ -5,6 +5,7 @@ import { newId } from '../state/defaults'
 import { evenShelfHeightOffsets } from '../domain/shelves'
 import {
   CheckboxField,
+  DimensionsField,
   NumberField,
   SelectField,
   TextField,
@@ -97,26 +98,20 @@ export function PropertyPanel() {
 
       <section className="property-panel__group">
         <h3>{t('propertyPanel.body')}</h3>
-        <NumberField
-          label={t('propertyPanel.width')}
-          value={cabinet.width}
-          min={1}
-          suffix={t('units.mm')}
-          onChange={(width) => patch({ width })}
-        />
-        <NumberField
-          label={t('propertyPanel.height')}
-          value={cabinet.height}
-          min={1}
-          suffix={t('units.mm')}
-          onChange={(height) => patch({ height })}
-        />
-        <NumberField
-          label={t('propertyPanel.depth')}
-          value={cabinet.depth}
-          min={1}
-          suffix={t('units.mm')}
-          onChange={(depth) => patch({ depth })}
+        <DimensionsField
+          label={t('propertyPanel.size')}
+          unit={t('units.mm')}
+          values={[cabinet.width, cabinet.height, cabinet.depth]}
+          axisLabels={[
+            t('propertyPanel.width'),
+            t('propertyPanel.height'),
+            t('propertyPanel.depth'),
+          ]}
+          onChange={(index, value) => {
+            if (index === 0) patch({ width: value })
+            else if (index === 1) patch({ height: value })
+            else patch({ depth: value })
+          }}
         />
         <SelectField
           label={t('propertyPanel.joinType')}
@@ -226,20 +221,22 @@ export function PropertyPanel() {
                   ×
                 </button>
               </div>
-              <NumberField
-                label={t('propertyPanel.frontOffset')}
-                value={shelf.frontOffset}
-                min={0}
-                suffix={t('units.mm')}
-                onChange={(frontOffset) => updateShelf(index, { frontOffset })}
-              />
-              <NumberField
-                label={t('propertyPanel.heightOffset')}
-                value={shelf.heightOffset}
-                min={0}
-                suffix={t('units.mm')}
-                onChange={(heightOffset) => updateShelf(index, { heightOffset })}
-              />
+              <div className="field-row">
+                <NumberField
+                  label={t('propertyPanel.frontOffset')}
+                  value={shelf.frontOffset}
+                  min={0}
+                  suffix={t('units.mm')}
+                  onChange={(frontOffset) => updateShelf(index, { frontOffset })}
+                />
+                <NumberField
+                  label={t('propertyPanel.heightOffset')}
+                  value={shelf.heightOffset}
+                  min={0}
+                  suffix={t('units.mm')}
+                  onChange={(heightOffset) => updateShelf(index, { heightOffset })}
+                />
+              </div>
               <CheckboxField
                 label={t('propertyPanel.structural')}
                 checked={shelf.structural}

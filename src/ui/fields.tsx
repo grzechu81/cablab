@@ -1,6 +1,6 @@
 /** Small controlled form controls shared by the property panel and settings modal. */
 
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 
 interface FieldShellProps {
   label: ReactNode
@@ -54,6 +54,50 @@ export function NumberField({
         {suffix ? <span className="field__suffix">{suffix}</span> : null}
       </span>
     </FieldShell>
+  )
+}
+
+interface DimensionsFieldProps {
+  label: ReactNode
+  unit: ReactNode
+  /** [width, height, depth] */
+  values: [number, number, number]
+  /** Accessible name for each input, in the same order as `values`. */
+  axisLabels: [string, string, string]
+  onChange: (index: 0 | 1 | 2, value: number) => void
+}
+
+/** Three number inputs on one line — `[W] × [H] × [D] mm`, cut-sheet style. */
+export function DimensionsField({
+  label,
+  unit,
+  values,
+  axisLabels,
+  onChange,
+}: DimensionsFieldProps) {
+  return (
+    <div className="field">
+      <span className="field__label">{label}</span>
+      <div className="dims">
+        {values.map((value, index) => (
+          <Fragment key={index}>
+            {index > 0 ? <span className="dims__x">×</span> : null}
+            <input
+              className="field__input"
+              type="number"
+              min={1}
+              aria-label={axisLabels[index]}
+              value={Number.isFinite(value) ? value : ''}
+              onChange={(event) => {
+                const next = event.target.valueAsNumber
+                if (!Number.isNaN(next)) onChange(index as 0 | 1 | 2, next)
+              }}
+            />
+          </Fragment>
+        ))}
+        <span className="dims__unit">{unit}</span>
+      </div>
+    </div>
   )
 }
 

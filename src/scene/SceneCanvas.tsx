@@ -41,7 +41,7 @@ export function SceneCanvas() {
       camera={{ position: [1050, 950, -1550], fov: 45, near: 1, far: 40000 }}
       onPointerMissed={() => select(null)}
     >
-      <color attach="background" args={['#eef1f4']} />
+      <color attach="background" args={['#eeece7']} />
       <ambientLight intensity={0.75} />
       <hemisphereLight intensity={0.35} groundColor="#b9b0a0" />
       <directionalLight position={[900, 2200, -1400]} intensity={1.4} />
@@ -50,10 +50,10 @@ export function SceneCanvas() {
         args={[20000, 20000]}
         cellSize={100}
         cellThickness={0.6}
-        cellColor="#c4ccd4"
+        cellColor="#d6d1c4"
         sectionSize={500}
         sectionThickness={1}
-        sectionColor="#9aa6b2"
+        sectionColor="#b3ac9b"
         fadeDistance={9000}
         fadeStrength={1.5}
         infiniteGrid

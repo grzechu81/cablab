@@ -52,7 +52,7 @@ export function Cabinet3D({
     event.stopPropagation()
     onSelect(cabinet.id)
 
-    // Default drag slides the cabinet across the floor (X/Z); Ctrl/Cmd lifts it (Y).
+    // Default drag slides the cabinet across the floor (X/Z); Alt/Cmd lifts it (Y).
     const lift = event.nativeEvent.altKey || event.nativeEvent.metaKey
     const axes: Axis[] = lift ? ['y'] : ['x', 'z']
     const neighbours = cabinetBoxes
@@ -130,7 +130,7 @@ export function Cabinet3D({
         <mesh position={boxCenter}>
           <boxGeometry args={boxSize} />
           <meshBasicMaterial visible={false} />
-          <Edges color="#2f6bff" />
+          <Edges color="#3f9488" lineWidth={2} />
         </mesh>
       ) : null}
 

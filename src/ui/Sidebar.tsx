@@ -40,9 +40,7 @@ export function Sidebar() {
       select(null)
     } catch (error) {
       setLoadError(
-        error instanceof ProjectParseError
-          ? error.message
-          : String(error),
+        error instanceof ProjectParseError ? error.message : String(error),
       )
     }
   }
@@ -54,60 +52,16 @@ export function Sidebar() {
         <p>{t('app.tagline')}</p>
       </div>
 
-      <div className="sidebar__toolbar">
-        <div className="sidebar__toolbar-row">
-          <button type="button" className="btn" onClick={handleNew}>
-            {t('actions.newProject')}
-          </button>
-        </div>
-        <div className="sidebar__toolbar-row">
-          <button type="button" className="btn" onClick={handleSave}>
-            {t('actions.save')}
-          </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => fileInput.current?.click()}
-          >
-            {t('actions.load')}
-          </button>
-        </div>
-        <div className="sidebar__toolbar-row">
-          <button type="button" className="btn" onClick={() => openModal('settings')}>
-            {t('actions.settings')}
-          </button>
-        </div>
-        <div className="sidebar__toolbar-row">
-          <button type="button" className="btn" onClick={() => openModal('cutList')}>
-            {t('actions.cutList')}
-          </button>
-        </div>
-        <input
-          ref={fileInput}
-          type="file"
-          accept="application/json,.json"
-          hidden
-          onChange={(event) => {
-            const file = event.target.files?.[0]
-            if (file) void handleLoad(file)
-            event.target.value = ''
-          }}
-        />
-      </div>
-
-      {loadError ? (
-        <p className="sidebar__error" role="alert">
-          {t('persistence.loadFailedTitle')}: {loadError}
-        </p>
-      ) : null}
+      <button
+        type="button"
+        className="btn btn--primary sidebar__primary"
+        onClick={handleAdd}
+      >
+        + {t('actions.addCabinet')}
+      </button>
 
       <div className="sidebar__section">
-        <div className="sidebar__section-head">
-          <span>{t('sidebar.cabinets')}</span>
-          <button type="button" className="btn btn--small" onClick={handleAdd}>
-            + {t('actions.addCabinet')}
-          </button>
-        </div>
+        <span className="sidebar__section-head">{t('sidebar.cabinets')}</span>
 
         {cabinets.length === 0 ? (
           <p className="sidebar__empty">{t('sidebar.empty')}</p>
@@ -126,7 +80,7 @@ export function Sidebar() {
                 >
                   <span className="cabinet-list__name">{cabinet.name}</span>
                   <span className="cabinet-list__dims">
-                    {cabinet.width} × {cabinet.height} × {cabinet.depth}
+                    {cabinet.width} × {cabinet.height} × {cabinet.depth} mm
                   </span>
                 </button>
               </li>
@@ -134,6 +88,56 @@ export function Sidebar() {
           </ul>
         )}
       </div>
+
+      <div className="sidebar__spacer" />
+
+      {loadError ? (
+        <p className="sidebar__error" role="alert">
+          {t('persistence.loadFailedTitle')}: {loadError}
+        </p>
+      ) : null}
+
+      <div className="sidebar__utilities">
+        <button type="button" className="btn btn--ghost" onClick={handleNew}>
+          {t('actions.newProject')}
+        </button>
+        <button type="button" className="btn btn--ghost" onClick={handleSave}>
+          {t('actions.save')}
+        </button>
+        <button
+          type="button"
+          className="btn btn--ghost"
+          onClick={() => fileInput.current?.click()}
+        >
+          {t('actions.load')}
+        </button>
+        <button
+          type="button"
+          className="btn btn--ghost"
+          onClick={() => openModal('settings')}
+        >
+          {t('actions.settings')}
+        </button>
+        <button
+          type="button"
+          className="btn btn--ghost"
+          onClick={() => openModal('cutList')}
+        >
+          {t('actions.cutList')}
+        </button>
+      </div>
+
+      <input
+        ref={fileInput}
+        type="file"
+        accept="application/json,.json"
+        hidden
+        onChange={(event) => {
+          const file = event.target.files?.[0]
+          if (file) void handleLoad(file)
+          event.target.value = ''
+        }}
+      />
     </aside>
   )
 }
