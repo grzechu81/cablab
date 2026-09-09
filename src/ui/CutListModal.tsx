@@ -1,12 +1,8 @@
-import { t, type StringKey } from '../i18n'
+import { t } from '../i18n'
 import { useProjectStore } from '../state/store'
 import { useUiStore } from '../state/uiStore'
 import { selectCutoutList, selectProjectHardware } from '../state/selectors'
 import { Modal } from './Modal'
-
-function edgeLabel(edge: string): string {
-  return t(`edges.${edge}` as StringKey)
-}
 
 export function CutListModal() {
   const cabinets = useProjectStore((s) => s.project.cabinets)
@@ -48,16 +44,14 @@ export function CutListModal() {
                   <td className="num">{row.width}</td>
                   <td className="num">{row.height}</td>
                   <td className="num">{row.thickness}</td>
-                  <td>
-                    {row.edgeBandedEdges.length === 0
-                      ? t('cutList.noBanding')
-                      : row.edgeBandedEdges.map(edgeLabel).join(', ')}
-                  </td>
+                  <td>{row.edgeBanding || t('cutList.noBanding')}</td>
                   <td className="num">{row.quantity}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <p className="cut-list__legend">{t('cutList.edgeBandingLegend')}</p>
 
           <div className="hardware-summary">
             <h3>{t('hardware.title')}</h3>

@@ -127,7 +127,9 @@ interface CutoutListEntry {
   width: number;
   height: number;
   thickness: number;
-  edgeBandedEdges: string[]; // e.g. ['top', 'left']
+  edgeBanding: string; // by edge length: 'W' per banded width-length edge
+                        // (top/bottom), 'H' per height-length edge (left/right),
+                        // W's first. 'WWHH' = all four, '' = none.
   quantity: number;
 }
 ```

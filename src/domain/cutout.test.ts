@@ -78,7 +78,7 @@ describe('buildCutoutList — grouping', () => {
       width: 296,
       height: 715,
       thickness: 18,
-      edgeBandedEdges: ['top', 'left', 'right', 'bottom'],
+      edgeBanding: 'WWHH',
     })
   })
 
@@ -101,8 +101,8 @@ describe('buildCutoutList — grouping', () => {
   })
 })
 
-describe('buildCutoutList — edgeBandedEdges', () => {
-  it('flattens EdgeBanding in the fixed top/left/right/bottom order', () => {
+describe('buildCutoutList — edgeBanding code', () => {
+  it('codes banded edges as W (top/bottom) and H (left/right), W first', () => {
     const list = cutList([
       makeCabinet({
         back: { enabled: true, hdfThickness: 3 },
@@ -110,10 +110,10 @@ describe('buildCutoutList — edgeBandedEdges', () => {
       }),
     ])
     const by = (role: string) => list.find((e) => e.panelRole === role)!
-    expect(by('door').edgeBandedEdges).toEqual(['top', 'left', 'right', 'bottom'])
-    expect(by('top').edgeBandedEdges).toEqual(['bottom'])
-    expect(by('left-side').edgeBandedEdges).toEqual(['left'])
-    expect(by('back').edgeBandedEdges).toEqual([])
+    expect(by('door').edgeBanding).toBe('WWHH') // all four
+    expect(by('top').edgeBanding).toBe('W') // front (bottom) edge banded
+    expect(by('left-side').edgeBanding).toBe('H') // front (left) edge banded
+    expect(by('back').edgeBanding).toBe('') // hidden — none
   })
 })
 

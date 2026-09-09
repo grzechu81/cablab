@@ -40,6 +40,7 @@ future-you (or a second machine) doesn't have to re-derive the reasoning.
 | 31 | Deploy: GitHub Pages via a GitHub Actions workflow on push to `main`; git repo re-rooted at the project folder | Matches decision #2 (static hosting); Actions flow needs no `gh-pages` branch; `vite.config.ts` `base` must equal the repo name (`cablab`). Full runbook in `06-deployment.md` |
 | 32 | `ProjectSettings.defaultShelfFrontOffset` (20 mm) — seeds a new shelf's `frontOffset`; added via zod `.default(20)`, no `schemaVersion` bump | The old default of 0 mm (shelf flush with the front) is rarely what you want; 20 mm matches typical practice. A defaulted additive field is backward/forward compatible without a migration — see `04-persistence-schema.md` |
 | 33 | `doors.seeThrough` (per-cabinet, default false) — doors render solid; the checkbox makes them semi-transparent in the 3D view | Solid doors are the honest default (that's how the cabinet looks); see-through is an on-demand aid for checking the interior. Per-cabinet, not global, so you can x-ray one unit at a time. View-only — the engine and cut list ignore it. Additive, `z.boolean().default(false)`, no schema bump |
+| 34 | Cut-list edge banding shown as a W/H length code (`W` per banded width-length edge, `H` per height-length edge, e.g. `WWHH`) instead of edge names (`top`, `left`) | The supplier needs to know which way to run the tape, not the geometric edge name. The code lines up with the Width / Height columns right next to it; a legend under the table spells it out |
 
 ## Open / TBD
 

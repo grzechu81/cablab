@@ -156,8 +156,13 @@ export interface CutoutListEntry {
   width: number
   height: number
   thickness: number
-  /** Banded edges, in the fixed order top, left, right, bottom. e.g. `['top', 'left']`. */
-  edgeBandedEdges: string[]
+  /**
+   * Which edges get banded, by the length they run: `W` per banded edge whose
+   * length is the panel width (top / bottom), `H` per edge whose length is the
+   * panel height (left / right), W's first. e.g. `'WWHH'` = all four edges,
+   * `'W'` = one long edge, `''` = none.
+   */
+  edgeBanding: string
   quantity: number
 }
 

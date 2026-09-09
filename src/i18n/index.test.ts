@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { en } from './en'
 import { getStrings, t, type StringKey } from './index'
-import type { EdgeBanding, PanelRole } from '../domain/types'
+import type { PanelRole } from '../domain/types'
 
 describe('t', () => {
   it('resolves a dot-path to its string', () => {
@@ -41,11 +41,5 @@ describe('string coverage (drift guards)', () => {
 
   it.each(roles)('has a label for panel role %s', (role) => {
     expect(t(`cabinet.roles.${role}` as StringKey)).toBeTruthy()
-  })
-
-  const edges: (keyof EdgeBanding)[] = ['top', 'left', 'right', 'bottom']
-
-  it.each(edges)('has a label for edge %s', (edge) => {
-    expect(t(`edges.${edge}` as StringKey)).toBeTruthy()
   })
 })

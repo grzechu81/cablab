@@ -28,7 +28,7 @@ const ROLE_RANK: Record<PanelRole, number> = {
   door: 6,
 }
 
-/** Fixed edge order for `edgeBandedEdges` and the grouping key. */
+/** Fixed edge order for the grouping key. */
 const EDGE_ORDER: (keyof EdgeBanding)[] = ['top', 'left', 'right', 'bottom']
 
 /** 0.01 mm — far below any woodworking tolerance, and stable against float noise. */
@@ -36,8 +36,15 @@ function mm(value: number): string {
   return value.toFixed(2)
 }
 
-function bandedEdges(banding: EdgeBanding): string[] {
-  return EDGE_ORDER.filter((edge) => banding[edge])
+/**
+ * Edge-banding code by edge length: `W` for each banded top/bottom edge (its
+ * length is the panel width), `H` for each banded left/right edge, W's first.
+ * `'WWHH'` = all four, `''` = none. Tells the supplier which way to run the tape.
+ */
+function edgeBandingCode(banding: EdgeBanding): string {
+  const widthEdges = (banding.top ? 1 : 0) + (banding.bottom ? 1 : 0)
+  const heightEdges = (banding.left ? 1 : 0) + (banding.right ? 1 : 0)
+  return 'W'.repeat(widthEdges) + 'H'.repeat(heightEdges)
 }
 
 function groupKey(cabinetId: string, panel: Panel): string {
@@ -65,7 +72,7 @@ function compareRows(a: Row, b: Row): number {
   if (a.entry.height !== b.entry.height) return b.entry.height - a.entry.height
   if (a.entry.thickness !== b.entry.thickness) return b.entry.thickness - a.entry.thickness
 
-  return a.entry.edgeBandedEdges.join(',').localeCompare(b.entry.edgeBandedEdges.join(','))
+  return a.entry.edgeBanding.localeCompare(b.entry.edgeBanding)
 }
 
 /**
@@ -100,7 +107,7 @@ export function buildCutoutList(
           width: panel.width,
           height: panel.height,
           thickness: panel.thickness,
-          edgeBandedEdges: bandedEdges(panel.edgeBanding),
+          edgeBanding: edgeBandingCode(panel.edgeBanding),
           quantity: 1,
         },
       })

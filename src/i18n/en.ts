@@ -113,6 +113,8 @@ export const en = {
       quantity: 'Qty',
     },
     noBanding: '—',
+    edgeBandingLegend:
+      'Edge banding: W = a tape run the length of the Width, H = the length of the Height.',
   },
   hardware: {
     title: 'Hardware',
@@ -120,12 +122,6 @@ export const en = {
     screws: 'Screws (incl. waste margin)',
     shelfPins: 'Shelf pins',
     hangers: 'Wall hangers',
-  },
-  edges: {
-    top: 'top',
-    left: 'left',
-    right: 'right',
-    bottom: 'bottom',
   },
   units: {
     mm: 'mm',
