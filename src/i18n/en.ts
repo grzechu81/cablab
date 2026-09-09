@@ -29,8 +29,9 @@ export const en = {
     empty: 'No cabinets yet.',
   },
   scene: {
-    placeholder: '3D view coming soon',
-    selectedCount: '{count} cabinet(s) in this project',
+    loading: 'Loading 3D view…',
+    empty: 'Add a cabinet to start building.',
+    dragHint: 'Drag a cabinet to move it · hold Ctrl for depth',
   },
   cabinet: {
     defaultName: 'New cabinet',
