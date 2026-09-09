@@ -7,7 +7,7 @@ scene of the project. No backend; a project saves/loads as one JSON file.
 
 **Read `docs/` before non-trivial work** — `00-overview` → `01-architecture` →
 `02-domain-model` → `03-calculation-engine` → `04-persistence-schema` →
-`05-decisions-log`. The docs are the design source of truth.
+`05-decisions-log` → `06-deployment`. The docs are the design source of truth.
 
 ## Commands
 
@@ -24,9 +24,11 @@ must be clean (zero oxlint warnings too).
 
 ## Deploy
 
-Pushing to `main` publishes to GitHub Pages at `https://<user>.github.io/cablab/`
-via `.github/workflows/deploy.yml`. The Pages base path lives in
-`vite.config.ts` (`base: '/cablab/'` on `build`) and must match the repo name.
+Pushing to `main` publishes to GitHub Pages at
+<https://grzechu81.github.io/cablab/> via `.github/workflows/deploy.yml`. The
+Pages base path lives in `vite.config.ts` (`base: '/cablab/'` on `build` +
+`preview`) and must match the repo name. Full runbook + gotchas in
+`docs/06-deployment.md`.
 
 ## Architecture — derive, don't store
 
@@ -73,8 +75,9 @@ rules.
 
 ## Status
 
-Built: calc engine, cut list, persistence, i18n, store + selectors, UI shell
-(sidebar / property panel / settings + cut-list modals), 3D scene — drag slides a
-cabinet on the floor (X/Z), Ctrl/Cmd lifts it (Y), with face snapping +
-no-overlap collision (`src/scene/collision.ts`). Not yet: component tests
-(`@testing-library/react` + jsdom not set up), the deferred v1 items above.
+Built and deployed: calc engine, cut list, persistence, i18n, store + selectors,
+UI shell (sidebar / property panel / settings + cut-list modals), 3D scene —
+drag slides a cabinet on the floor (X/Z), Ctrl/Cmd lifts it (Y), with face
+snapping + no-overlap collision (`src/scene/collision.ts`). Live on GitHub Pages.
+Not yet: component tests (`@testing-library/react` + jsdom not set up), the
+deferred v1 items above.

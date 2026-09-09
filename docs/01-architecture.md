@@ -10,8 +10,9 @@
 - **Validation:** zod (for validating loaded project JSON against the schema)
 - **Testing:** Vitest (or Jest) for the calculation engine; React Testing Library
   for component-level tests if needed
-- **Hosting:** static build, deployed to Netlify/Vercel/GitHub Pages — no server,
-  no database, no auth
+- **Hosting:** Vite static build published to GitHub Pages by a GitHub Actions
+  workflow on every push to `main` — no server, no database, no auth. Details in
+  `06-deployment.md`.
 
 ## System diagram
 
@@ -44,7 +45,8 @@
 │                  3D Scene (react-three-fiber)                       │
 │  One mesh group per cabinet, built from panels[]                    │
 │  OrbitControls for camera · raycasting for selection                 │
-│  Axis-constrained drag-to-move (X/Y free, Z while holding Ctrl)       │
+│  Drag on the floor (X/Z); Ctrl/Cmd lifts (Y). Face snapping +         │
+│  no-overlap collision — see decision #30 and src/scene/collision.ts   │
 └───────────────────────────────────────────────────────────────────────┘
 
 Persistence (no backend):

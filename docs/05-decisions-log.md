@@ -36,6 +36,8 @@ future-you (or a second machine) doesn't have to re-derive the reasoning.
 | 27 | Persistence split into a pure module (`persistence/project.ts`) + thin DOM glue (`persistence/projectFile.ts`) | Keeps parse/validate/migrate unit-testable in Node; the download/upload plumbing has nothing worth testing |
 | 28 | Store holds raw `Project` only; geometry/cut-list/hardware come from memoized selectors (`state/selectors.ts`) | Direct application of decision #9; per-cabinet geometry cached by `CabinetInput` identity, which works because store actions replace edited cabinets immutably |
 | 29 | New cabinets default to `back.enabled: true` (grooved HDF back, 3 mm) | A back panel is the common real-world case; matches decision #14 |
+| 30 | 3D drag: default slides on the **floor plane (X/Z)**, Ctrl/Cmd lifts (Y) — reverses the earlier "X/Y free, Z with Ctrl" sketch | A vertical X/Y drag plane goes edge-on to the pick ray at top-down camera angles (cabinet flew to infinity), and X/Z is the natural axis set for arranging cabinets and for front-to-back face snapping. Implemented with per-drag-axis collision + snapping in `src/scene/collision.ts` |
+| 31 | Deploy: GitHub Pages via a GitHub Actions workflow on push to `main`; git repo re-rooted at the project folder | Matches decision #2 (static hosting); Actions flow needs no `gh-pages` branch; `vite.config.ts` `base` must equal the repo name (`cablab`). Full runbook in `06-deployment.md` |
 
 ## Open / TBD
 

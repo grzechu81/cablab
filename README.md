@@ -1,5 +1,7 @@
 # CabLab
 
+**Live: <https://grzechu81.github.io/cablab/>**
+
 A client-side web app for designing simple, self-built cabinets: enter a body
 (width × height × depth), pick how the panels join, add doors / shelves / a back
 panel, and get real panel dimensions, a hardware estimate, a printable cut list,
@@ -25,10 +27,10 @@ npm run preview    # serve the production build locally
 ## Deploy
 
 Pushing to `main` publishes to **GitHub Pages** at
-`https://<user>.github.io/cablab/` via `.github/workflows/deploy.yml`. The Pages
-base path is set in `vite.config.ts` and must match the repository name.
+<https://grzechu81.github.io/cablab/> via `.github/workflows/deploy.yml`. Setup,
+the base-path config, and gotchas are in `docs/06-deployment.md`.
 
 ## More
 
 - `CLAUDE.md` — orientation for working in this repo (layout, conventions).
-- `docs/` — the design source of truth (`00-overview` → `05-decisions-log`).
+- `docs/` — the design source of truth (`00-overview` → `06-deployment`).

@@ -22,7 +22,7 @@ These were explicitly decided during initial design discussion — see
 | Decision | Choice |
 |---|---|
 | Backend | None — fully client-side, static app |
-| Hosting | Static hosting (Netlify / Vercel / GitHub Pages) |
+| Hosting | GitHub Pages — auto-deployed from `main`, live at <https://grzechu81.github.io/cablab/> (see `06-deployment.md`) |
 | Frontend framework | React |
 | Offline / installable (PWA) | Not needed — normal web page |
 | Typical project size | Small, ~5–20 cabinets |
@@ -48,6 +48,7 @@ Read in this order:
 4. `03-calculation-engine.md` — how panel dimensions and hardware counts are derived
 5. `04-persistence-schema.md` — the save/load JSON format and versioning approach
 6. `05-decisions-log.md` — decisions made so far, and open questions still to resolve
+7. `06-deployment.md` — how the site is built and published to GitHub Pages
 
 Nothing here is final/frozen — these are working docs meant to let a second-machine
 setup (or a future session) pick up exactly where the design conversation left off.
