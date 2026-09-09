@@ -6,7 +6,7 @@ import type { EdgeBanding, PanelRole } from '../domain/types'
 describe('t', () => {
   it('resolves a dot-path to its string', () => {
     expect(t('cabinet.defaultName')).toBe('New cabinet')
-    expect(t('cutoutList.columns.part')).toBe('Part')
+    expect(t('cutList.columns.part')).toBe('Part')
   })
 
   it('interpolates {param} placeholders', () => {
