@@ -64,8 +64,8 @@ bottomPanel          = same as topPanel
 ## Shelves
 
 Each shelf in `CabinetInput.shelves` is computed independently (its own
-`frontOffset`), though `width`/`thickness` only depend on the cabinet, not
-the individual shelf:
+`frontOffset` and `heightOffset`), though `width`/`thickness` only depend on
+the cabinet, not the individual shelf:
 
 ```
 shelf.width  = innerWidth  (i.e. width minus two side-panel thicknesses,
@@ -73,6 +73,13 @@ shelf.width  = innerWidth  (i.e. width minus two side-panel thicknesses,
 shelf.depth  = depth - backOffset - shelf.frontOffset
 shelf.thickness = boardThickness (or a dedicated shelf thickness, if we
                decide to support that as a separate setting)
+
+shelf.position = { x: boardThickness, y: shelf.heightOffset, z: shelf.frontOffset }
+  // heightOffset is measured to the shelf underside, from the cabinet's outer
+  // bottom (Y=0) — same reference convention as frontOffset from the front face.
+
+backOffset = back.enabled ? (grooveOffsetFromBack + back.hdfThickness) : 0
+  // clearance so the shelf stops at the front face of the back panel
 ```
 
 Mounting (`structural: true/false`) doesn't affect these dimensions — it only

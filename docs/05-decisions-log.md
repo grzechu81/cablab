@@ -28,6 +28,9 @@ future-you (or a second machine) doesn't have to re-derive the reasoning.
 | 19 | Screw count: `(4 + 2×structuralShelves) × screwsPerJoint` per cabinet, summed project-wide, +waste margin (default 15%) | Matches real assembly practice (2 screws per panel joint, base box has 4 joints); simple enough to match the spec's "more or less" precision goal; `screwsPerJoint` and margin are global settings |
 | 20 | Shelves become a list (`ShelfInput[]`), not an aggregate count | Needed to support a per-shelf structural flag rather than a single cabinet-wide setting |
 | 21 | Shelf mounting default: pin-mounted (adjustable); `structural: true` is an opt-in per-shelf flag | Matches actual build practice — pin-mounted is the common case, structural is the exception |
+| 22 | `ShelfInput.heightOffset` — explicit per-shelf vertical position (mm to the underside, from the cabinet's outer bottom) | The engine needs a real vertical position per shelf; measuring to the underside from Y=0 mirrors `frontOffset`'s "from the front face" convention |
+| 23 | `backOffset` (shelf-to-back clearance) = `grooveOffsetFromBack + hdfThickness` when a back is present, else 0 | The shelf-depth formula referenced `backOffset` without defining it; this stops the shelf exactly at the back panel's front face |
+| 24 | `computeCabinetGeometry(input, settings)` takes `ProjectSettings` as a second argument | Door margins, groove dims and screw params live in `ProjectSettings`, not `CabinetInput` — the single-arg signature in the architecture sketch was incomplete |
 
 ## Open / TBD
 

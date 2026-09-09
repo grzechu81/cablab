@@ -13,6 +13,7 @@ type PositionMode = 'auto' | 'manual';
 interface ShelfInput {
   id: string;
   frontOffset: number;  // mm from cabinet front
+  heightOffset: number; // mm from cabinet bottom (outer, Y=0) to the shelf underside
   structural: boolean;  // default: false — pin-mounted (adjustable, the default).
                          // true = screwed to both sides ("structural"); contributes
                          // to the screw count instead of the shelf-pin count.
