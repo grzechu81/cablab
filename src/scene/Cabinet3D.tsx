@@ -53,7 +53,7 @@ export function Cabinet3D({
     onSelect(cabinet.id)
 
     // Default drag slides the cabinet across the floor (X/Z); Ctrl/Cmd lifts it (Y).
-    const lift = event.nativeEvent.ctrlKey || event.nativeEvent.metaKey
+    const lift = event.nativeEvent.altKey || event.nativeEvent.metaKey
     const axes: Axis[] = lift ? ['y'] : ['x', 'z']
     const neighbours = cabinetBoxes
       .filter((entry) => entry.id !== cabinet.id)
