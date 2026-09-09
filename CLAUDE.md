@@ -74,6 +74,7 @@ rules.
 ## Status
 
 Built: calc engine, cut list, persistence, i18n, store + selectors, UI shell
-(sidebar / property panel / settings + cut-list modals), 3D scene (drag to move,
-Ctrl for depth). Not yet: component tests (`@testing-library/react` + jsdom not
-set up), cabinet snapping/collision, the deferred v1 items above.
+(sidebar / property panel / settings + cut-list modals), 3D scene — drag slides a
+cabinet on the floor (X/Z), Ctrl/Cmd lifts it (Y), with face snapping +
+no-overlap collision (`src/scene/collision.ts`). Not yet: component tests
+(`@testing-library/react` + jsdom not set up), the deferred v1 items above.

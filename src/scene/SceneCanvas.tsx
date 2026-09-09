@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { GizmoHelper, GizmoViewport, Grid, OrbitControls } from '@react-three/drei'
 import { Cabinet3D } from './Cabinet3D'
 import { resolveCabinetPositions } from './layout'
+import { cabinetBox } from './collision'
 import { useProjectStore } from '../state/store'
 import { useUiStore } from '../state/uiStore'
 import { selectProjectGeometries } from '../state/selectors'
@@ -20,6 +21,12 @@ export function SceneCanvas() {
 
   const geometries = selectProjectGeometries(cabinets, settings)
   const positions = useMemo(() => resolveCabinetPositions(cabinets), [cabinets])
+
+  // World envelopes of every cabinet, for drag collision / snapping.
+  const cabinetBoxes = useMemo(
+    () => cabinets.map((c) => ({ id: c.id, box: cabinetBox(c, positions[c.id]) })),
+    [cabinets, positions],
+  )
 
   const handleMove = useCallback(
     (id: string, position: Vec3) => {
@@ -58,6 +65,7 @@ export function SceneCanvas() {
           cabinet={cabinet}
           geometry={geometries[index]}
           worldPos={positions[cabinet.id]}
+          cabinetBoxes={cabinetBoxes}
           selected={cabinet.id === selectedId}
           showDimensions={settings.showDimensions}
           onSelect={select}

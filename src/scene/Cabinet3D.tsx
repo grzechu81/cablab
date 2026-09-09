@@ -4,12 +4,15 @@ import { Edges, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { Panel3D } from './Panel3D'
 import { panelsBounds } from './panelBox'
+import { resolveCabinetDrag, type Axis, type Box } from './collision'
 import type { CabinetGeometry, CabinetInput, Vec3 } from '../domain/types'
 
 interface Cabinet3DProps {
   cabinet: CabinetInput
   geometry: CabinetGeometry
   worldPos: Vec3
+  /** World envelopes of every cabinet (this one included — filtered out on drag). */
+  cabinetBoxes: { id: string; box: Box }[]
   selected: boolean
   showDimensions: boolean
   onSelect: (id: string) => void
@@ -22,6 +25,7 @@ export function Cabinet3D({
   cabinet,
   geometry,
   worldPos,
+  cabinetBoxes,
   selected,
   showDimensions,
   onSelect,
@@ -48,12 +52,25 @@ export function Cabinet3D({
     event.stopPropagation()
     onSelect(cabinet.id)
 
-    const useDepth = event.nativeEvent.ctrlKey || event.nativeEvent.metaKey
+    // Default drag slides the cabinet across the floor (X/Z); Ctrl/Cmd lifts it (Y).
+    const lift = event.nativeEvent.ctrlKey || event.nativeEvent.metaKey
+    const axes: Axis[] = lift ? ['y'] : ['x', 'z']
+    const neighbours = cabinetBoxes
+      .filter((entry) => entry.id !== cabinet.id)
+      .map((entry) => entry.box)
     const origin = new THREE.Vector3(worldPos.x, worldPos.y, worldPos.z)
-    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(
-      useDepth ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(0, 0, 1),
-      origin,
-    )
+
+    // Floor plane for X/Z; for lifting, a vertical plane facing the camera so
+    // the pick ray always meets it (a fixed plane goes edge-on at some angles).
+    let planeNormal: THREE.Vector3
+    if (lift) {
+      planeNormal = camera.position.clone().sub(origin).setY(0)
+      if (planeNormal.lengthSq() < 1e-6) planeNormal.set(0, 0, 1)
+      planeNormal.normalize()
+    } else {
+      planeNormal = new THREE.Vector3(0, 1, 0)
+    }
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal, origin)
 
     const grab = event.ray.intersectPlane(plane, new THREE.Vector3())
     if (!grab) return
@@ -74,11 +91,22 @@ export function Cabinet3D({
       if (!hit) return
       hit.sub(grabOffset)
 
+      const proposed = lift
+        ? { x: start.x, y: hit.y, z: start.z }
+        : { x: hit.x, y: start.y, z: hit.z }
+
+      // Ignore a grazing-angle hit that lands absurdly far from the cabinet.
+      if (
+        Math.abs(proposed.x - start.x) > 1e5 ||
+        Math.abs(proposed.y - start.y) > 1e5 ||
+        Math.abs(proposed.z - start.z) > 1e5
+      ) {
+        return
+      }
+
       onMove(
         cabinet.id,
-        useDepth
-          ? { x: start.x, y: start.y, z: hit.z }
-          : { x: hit.x, y: hit.y, z: start.z },
+        resolveCabinetDrag({ cabinet, from: start, proposed, neighbours, axes }),
       )
     }
 

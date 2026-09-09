@@ -31,7 +31,7 @@ export const en = {
   scene: {
     loading: 'Loading 3D view…',
     empty: 'Add a cabinet to start building.',
-    dragHint: 'Drag a cabinet to move it · hold Ctrl for depth',
+    dragHint: 'Drag a cabinet to slide it on the floor · hold Ctrl to lift',
   },
   cabinet: {
     defaultName: 'New cabinet',
